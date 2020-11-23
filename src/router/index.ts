@@ -1,8 +1,11 @@
 import Vue from 'vue'
-import VueRouter, { RouteConfig } from 'vue-router'
+import VueRouter, {RouteConfig} from 'vue-router'
 import Home from '../views/Home.vue'
+import Jokes from '../views/Jokes.vue'
+import NearestColor from "@/views/NearestColor.vue";
+import TextArea from "@/views/TextArea.vue";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
@@ -11,17 +14,24 @@ const routes: Array<RouteConfig> = [
     component: Home
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/nearestColor',
+    name: 'NearestColor',
+    component: NearestColor
+  },
+  {
+    path: '/textArea',
+    name: 'TextArea',
+    component: TextArea
+  },
+  {
+    path: '/jokes',
+    name: 'Jokes',
+    component: Jokes
   }
-]
+];
 
 const router = new VueRouter({
   routes
-})
+});
 
 export default router
