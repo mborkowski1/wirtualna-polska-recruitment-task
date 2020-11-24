@@ -80,10 +80,3 @@
     }
   })
 </script>
-
-<style scoped lang="scss">
-  .errorMsg {
-    color: red;
-    font-size: 12px;
-  }
-</style>

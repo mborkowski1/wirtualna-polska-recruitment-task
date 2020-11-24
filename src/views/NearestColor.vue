@@ -4,23 +4,41 @@
       <h2 class="text-center mb-3">Find Nearest Color</h2>
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-text-field
+            id="baseColorInput"
+            outlined
             v-model="baseColor"
-            label="Base Color Hex"
-            class="mb-4"
+            label="Base Color"
+            :class="getBaseColor ? 'mb-0' : 'mb-4'"
             :rules="baseColorRules"
             required>
         </v-text-field>
 
+        <div v-if="getBaseColor" class="d-flex align-center mb-4">
+          <div class="mr-2">Base color:</div>
+          <div class="colorIcon" :style="{backgroundColor: baseColor}"></div>
+          <div class="ml-2">{{baseColor}}</div>
+        </div>
+
         <v-textarea
+            id="colorsTextarea"
+            outlined
             v-model="colors"
             auto-grow
-            label="Colors List Hex"
-            class="mb-4"
+            label="Colors List"
+            :class="getColorsList ? 'mb-0' : 'mb-4'"
             :rules="[colorsRequiredRule, checkHexColorFormat]"
             required>
         </v-textarea>
 
-        <v-btn @click="findColor" :disabled="!valid" color="primary">
+        <div v-if="getColorsList" class="mb-4 d-flex flex-column">
+          <div>Colors List:</div>
+          <div v-for="(color, index) in getColorsList" :key="index" class="d-flex align-center mb-1">
+            <div class="colorIcon mr-2" :style="{backgroundColor: color}"></div>
+            <span>{{color}}</span>
+          </div>
+        </div>
+
+        <v-btn id="findColorButton" @click="findColor" :disabled="!valid" color="primary">
           Find
         </v-btn>
       </v-form>
@@ -104,7 +122,7 @@
 
         for (let color of colorsList) {
           if (!color.match(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/ig)) {
-            return 'Colors should be in hex format separated by commas';
+            return 'Colors list should be in hex format separated by commas';
           }
         }
 
@@ -115,6 +133,24 @@
     computed: {
       form(): Vue & { validate: () => boolean } {
         return this.$refs.form as Vue & { validate: () => boolean };
+      },
+
+      getBaseColor(): boolean | string {
+        if (!this.baseColor.length) {
+          return false;
+        } else {
+          const isCorrectFormat = this.baseColorRules[1](this.baseColor);
+          return isCorrectFormat === true ? this.baseColor : false;
+        }
+      },
+
+      getColorsList(): boolean | Array<string> {
+        if (!this.colors.length) {
+          return false;
+        } else {
+          const isCorrectFormat = this.checkHexColorFormat(this.colors);
+          return isCorrectFormat === true ? this.colors.split(",") : false;
+        }
       }
     }
   })
@@ -125,9 +161,5 @@
     width: 25px;
     height: 25px;
     border-radius: 50%;
-  }
-  .errorMsg {
-    color: red;
-    font-size: 12px;
   }
 </style>

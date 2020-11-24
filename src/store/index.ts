@@ -1,30 +1,20 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import {IState, TJoke, TJokes} from "@/store/types";
 
 Vue.use(Vuex);
 
-interface IState {
-  jokes: Array<string>
-}
-
-interface IJokeToReplace {
-  joke: string,
-  index: number
-}
-
-type TJokes = Array<string>;
-
 export default new Vuex.Store<IState>({
   state: {
-    jokes: []
+    jokes: [] as TJokes
   },
   mutations: {
     setJokes(state, jokes: TJokes) {
       state.jokes = jokes;
     },
 
-    replaceJoke(state, jokeToReplace: IJokeToReplace) {
-      state.jokes[jokeToReplace.index] = jokeToReplace.joke;
+    replaceJoke(state, jokeToReplace: TJoke) {
+      state.jokes[jokeToReplace.id].value = jokeToReplace.value;
     }
   },
   actions: {
@@ -32,7 +22,7 @@ export default new Vuex.Store<IState>({
       commit('setJokes', jokes);
     },
 
-    replaceJoke({commit}, jokeToReplace: IJokeToReplace) {
+    replaceJoke({commit}, jokeToReplace: TJoke) {
       commit('replaceJoke', jokeToReplace);
     }
   }

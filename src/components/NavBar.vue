@@ -1,7 +1,7 @@
 <template>
-  <v-app-bar app color="primary" dark>
+  <v-app-bar app color="primary" dense dark>
     <v-tabs centered>
-      <v-tab v-for="(menuItem, index) in menuItems" :key="index" :to="menuItem.path">
+      <v-tab v-for="menuItem in menuItems" :key="menuItem.title" :to="menuItem.path">
         {{menuItem.title}}
       </v-tab>
     </v-tabs>

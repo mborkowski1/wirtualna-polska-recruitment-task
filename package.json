@@ -28,7 +28,7 @@
     "@vue/test-utils": "^1.1.1",
     "sass": "^1.29.0",
     "sass-loader": "^10.1.0",
-    "typescript": "~4.1.2",
+    "typescript": "~3.9.7",
     "vue-cli-plugin-vuetify": "~2.0.7",
     "vue-template-compiler": "^2.6.12",
     "vuetify-loader": "^1.6.0"
@@ -39,6 +39,9 @@
     "not dead"
   ],
   "jest": {
-    "preset": "@vue/cli-plugin-unit-jest/presets/typescript-and-babel"
+    "preset": "@vue/cli-plugin-unit-jest/presets/typescript-and-babel",
+    "setupFiles": [
+      "./tests/setup.js"
+    ]
   }
 }
